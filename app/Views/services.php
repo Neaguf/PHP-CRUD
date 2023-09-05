@@ -4,9 +4,14 @@
     <div class="card-body" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
         <?php if (isset($editMode) && $editMode) : ?>
             <!-- Edit mode: Show input fields for title and image URL -->
-            <form method="post" action="<?php echo base_url('services/save_changes'); ?>">
-                <input type="text" name="editedTitle" class="form-control" value="<?php echo $title; ?>">
-                <input type="text" name="editedImageUrl" class="form-control" value="<?php echo $imageUrl; ?>">
+
+            <form method="post" action="<?php echo base_url('services/save_changes'); ?>" enctype="multipart/form-data">
+
+
+                <textarea id="editor" name="editedTitle" class="form-control"><?php echo $title; ?></textarea>
+
+                <input type="file" name="userfile" size="20" />
+                <br />
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
         <?php else : ?>
@@ -30,3 +35,11 @@
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+    tinymce.init({
+        selector: '#editor',
+        height: 300, // Set the desired height for the editor
+        // Additional configuration options can be added here
+    });
+</script>

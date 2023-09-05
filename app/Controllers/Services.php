@@ -57,7 +57,20 @@ class Services extends BaseController
     public function save_changes()
     {
         $editedTitle = $this->request->getPost('editedTitle');
-        $editedImageUrl = $this->request->getPost('editedImageUrl');
+
+        $file = $this->request->getFile('userfile');
+
+        if (!$file->isValid()) {
+            throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+        }
+
+        // Set a file name
+        $name = $file->getRandomName();
+
+        // Move the file to its designated folder
+        $file->move(FCPATH . 'assets', $name);
+
+        $editedImageUrl = base_url() . 'assets/' . $name;
 
         $data = [
             'Text' => $editedTitle,
@@ -71,5 +84,16 @@ class Services extends BaseController
         $db->table('content')->where('Id', 1)->update($data);
 
         return redirect()->to(base_url('services'));
+    }
+
+    public function do_upload()
+    {
+
+
+        // if (!) {
+        //     $error = array('error' => $this->upload->display_errors());
+        // } else {
+        //     $data = array('upload_data' => $this->upload->data());
+        // }
     }
 }

@@ -52,7 +52,20 @@ class Home extends BaseController
     public function save_changes()
     {
         $editedTitle = $this->request->getPost('editedTitle');
-        $editedImageUrl = $this->request->getPost('editedImageUrl');
+
+        $file = $this->request->getFile('userfile');
+
+        if (!$file->isValid()) {
+            throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+        }
+
+        // Set a file name
+        $name = $file->getRandomName();
+
+        // Move the file to its designated folder
+        $file->move(FCPATH . 'assets', $name);
+
+        $editedImageUrl = base_url() . 'assets/' . $name;
 
         $data = [
             'Text' => $editedTitle,

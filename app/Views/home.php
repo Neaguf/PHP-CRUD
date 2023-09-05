@@ -4,9 +4,11 @@
     <div class="card-body" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
         <?php if (isset($editMode) && $editMode) : ?>
             <!-- Edit mode: Show input fields for title and image URL -->
-            <form method="post" action="<?php echo base_url('home/save_changes'); ?>">
+            <form method="post" action="<?php echo base_url('home/save_changes'); ?>" enctype="multipart/form-data">
+
                 <input type="text" name="editedTitle" class="form-control" value="<?php echo $title; ?>">
-                <input type="text" name="editedImageUrl" class="form-control" value="<?php echo $imageUrl; ?>">
+                <input type="file" name="userfile" size="20" />
+                <br />
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
         <?php else : ?>
