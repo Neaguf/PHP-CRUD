@@ -6,7 +6,9 @@
             <!-- Edit mode: Show input fields for title and image URL -->
             <form method="post" action="<?php echo base_url('home/save_changes'); ?>" enctype="multipart/form-data">
 
-                <input type="text" name="editedTitle" class="form-control" value="<?php echo $title; ?>">
+
+                <textarea id="editor" name="editedTitle" class="form-control"><?php echo $title; ?></textarea>
+
                 <input type="file" name="userfile" size="20" />
                 <br />
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -31,3 +33,11 @@
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+    tinymce.init({
+        selector: '#editor',
+        height: 300, // Set the desired height for the editor
+        // Additional configuration options can be added here
+    });
+</script>
